@@ -1,44 +1,37 @@
 const billAmount = document.querySelector("#bill-amount");
-const checkButton = document.querySelector("#check-button");
 const cashGiven = document.querySelector("#cash-given");
+const checkButton = document.querySelector("#check-button");
 const message = document.querySelector("#error-message");
 const noOfNotes = document.querySelectorAll(".no-of-notes");
-const availableNotes =[2000, 500, 100, 20, 10, 5, 1];
 
+const availableNotes = [2000, 500, 100, 20, 10, 5, 1];
 
-checkButton.addEventListener("click", function vaidateBillAndCashAmount() {
-    hideMessage();
-    
-
-if(billAmount.value > 0) {
-    if(cashGiven.value >= billAmount.value){
-         const amountToBeReturned = cashGiven.value - billAmount.value;
-        calculateChange(amountToBeReturned);
-
-
-    }else{
-        showMessage("The cash provided should atleast be equal to the bill amount");
+checkButton.addEventListener("click", function validateBillAndCashAmount() {
+  hideMessage();
+  if (billAmount.value > 0) {
+    if (cashGiven.value >= billAmount.value) {
+      const amountToBeReturned = cashGiven.value - billAmount.value; 
+      calculateChange(amountToBeReturned);
+    } else {
+      showMessage("Do you wanna wash plates?");
     }
+  } else {
+    showMessage("Invalid Bill Amount");
+  }
+});
 
-}else{
-    showMessage("Invalid bill amount");
+function calculateChange(amountToBeReturned) {
+  for (let i = 0; i < availableNotes.length; i++) {
+    const numberOfNotes = Math.trunc(amountToBeReturned / availableNotes[i]);
+    amountToBeReturned = amountToBeReturned % availableNotes[i];
+    noOfNotes[i].innerText = numberOfNotes;
+  }
 }
 
-}); 
-function calculateChange(amountToBeReturned){
-    for (let i =0; i < availableNotes.length; i++) {
-        const numberofNotes = Math.trunc
-        (amountToBeReturned/availableNotes[0]);
-        amountToBeReturned = amountToBeReturned % availableNotes[i];
-        noOfNotes[i].innerText = numberofNotes;
-    }
-}
-
-function hideMessage(){
-    message.style.display="none"; 
+function hideMessage() {
+  message.style.display = "none";
 }
 function showMessage(msg) {
-    message.style.display ="block"; 
-    message.innerText = msg;
+  message.style.display = "block";
+  message.innerText = msg;
 }
-
